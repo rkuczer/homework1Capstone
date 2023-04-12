@@ -13,14 +13,16 @@ def calculate_total(state, records):
     for record in records:
         if record['type'] not in tax_exempt:
             subtotal += record['price']
-        elif record['type'] == 'Clothing' and 'fur' not in record['name'].lower():
+        if record['type'] in tax_exempt:
             subtotal += record['price']
+        #elif record['type'] == 'Clothing' and 'fur' not in record['name'].lower():
+        #    subtotal += record['price']
 
     # Compute tax
     if state in tax_rates:
         tax = subtotal * tax_rates[state]
 
-    # Compute total
+    #Compute total
     total = subtotal + tax
 
     # Return total if > 0, else return 0
@@ -33,6 +35,6 @@ records = [
     {'name': 'Fur coat', 'type': 'Clothing', 'price': 500.00},
     {'name': 'Book', 'type': 'everything else', 'price': 5.00},
 ]
-state = 'DE'
+state = 'PA'
 total = calculate_total(state, records)
 print(f'Total charge for state {state}: ${total:.2f}')
