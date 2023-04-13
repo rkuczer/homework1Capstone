@@ -11,16 +11,24 @@ def calculate_total(state, records):
 
     # Compute subtotal
     for record in records:
+        if state == 'PA' and record['type'] == 'Clothing':
+            pass
         if record['type'] not in tax_exempt:
             subtotal += record['price']
         if record['type'] in tax_exempt:
             subtotal += record['price']
+
+
         #elif record['type'] == 'Clothing' and 'fur' not in record['name'].lower():
         #    subtotal += record['price']
 
     # Compute tax
     if state in tax_rates:
+        if records['type'] == 'Clothing' and 'fur' in records['name'].lower():
+            #furTax =
+            subtotal += record['price']
         tax = subtotal * tax_rates[state]
+
 
     #Compute total
     total = subtotal + tax
