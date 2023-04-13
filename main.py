@@ -6,43 +6,47 @@ def calculate_total(state, records):
     tax_exempt = {'Wic Eligible food', 'Clothing'}
 
     # Initialize variables
-    subtotal = 0
-    tax = 0
+    subtotal = 0.0
+    tax = 0.0
 
-    # Compute subtotal
-    for record in records:
-        if state == 'PA' and record['type'] == 'Clothing':
-            pass
-        if record['type'] not in tax_exempt:
-            subtotal += record['price']
-        if record['type'] in tax_exempt:
-            subtotal += record['price']
+    # Iterate through the items and calculate total and taxable prices
+    for item in records:
+        if item['type'] in tax_exempt:
+            # Item is tax exempt
+            subtotal += item['price']
+        elif item['type'] == 'Clothing':
+            if state == 'PA':
+                # Clothing is tax exempt in PA
+                subtotal += item['price']
+            elif state == 'NJ' and 'Fur' not in item['name']:
+                # Clothing is tax exempt in NJ except for fur clothing
+                subtotal += item['price']
+            else:
+                # Clothing is taxable
+                tax += item['price']
+        else:
+            # Item is taxable by default
+            tax += item['price']
 
-
-        #elif record['type'] == 'Clothing' and 'fur' not in record['name'].lower():
-        #    subtotal += record['price']
-
-    # Compute tax
+    # Calculate total price with tax
     if state in tax_rates:
-        if records['type'] == 'Clothing' and 'fur' in records['name'].lower():
-            #furTax =
-            subtotal += record['price']
-        tax = subtotal * tax_rates[state]
+        tax_rate = tax_rates[state]
+        subtotal += tax + (taxable_price * tax_rate)
 
-
-    #Compute total
-    total = subtotal + tax
-
-    # Return total if > 0, else return 0
-    return max(total, 0)
+    return round(subtotal, 2)
 
 
 records = [
     {'name': 'Apple', 'type': 'Wic Eligible food', 'price': 0.50},
     {'name': 'T-shirt', 'type': 'Clothing', 'price': 10.00},
-    {'name': 'Fur coat', 'type': 'Clothing', 'price': 500.00},
-    {'name': 'Book', 'type': 'everything else', 'price': 5.00},
+    {'name': 'Sneakers', 'type': 'Clothing', 'price': 50.00},
+    {'name': 'Laptop', 'type': 'everything else', 'price': 1000.00},
+    {'name': 'Milk', 'type': 'Wic Eligible food', 'price': 3.50},
+    {'name': 'Coat', 'type': 'Clothing', 'price': 75.00},
+    {'name': 'Book', 'type': 'everything else', 'price': 15.00},
+    {'name': 'Fur coat', 'type': 'Clothing', 'price': 200.00},
 ]
+
 state = 'PA'
 total = calculate_total(state, records)
-print(f'Total charge for state {state}: ${total:.2f}')
+print(f'Total charge for state {state}: ${subtotal:.2f}')
