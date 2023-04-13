@@ -6,8 +6,9 @@ def calculate_total(state, records):
     tax_exempt = {'Wic Eligible food', 'Clothing'}
 
     # Initialize variables
+    total = 0.0
+    taxable_total = 0.0
     subtotal = 0.0
-    tax = 0.0
 
     # Iterate through the items and calculate total and taxable prices
     for item in records:
@@ -23,30 +24,30 @@ def calculate_total(state, records):
                 subtotal += item['price']
             else:
                 # Clothing is taxable
-                tax += item['price']
+                tax_rate = tax_rates[state]
+                taxable_total += tax_rate * item['price']
+                subtotal += item['price']
         else:
             # Item is taxable by default
-            tax += item['price']
+            taxable_total += (tax_rates[state] * item['price'])
+    total += (subtotal + taxable_total)
 
     # Calculate total price with tax
-    if state in tax_rates:
-        tax_rate = tax_rates[state]
-        subtotal += tax + (taxable_price * tax_rate)
+    #if state in tax_rates:
+    #    tax_rate = tax_rates[state]
+    #    total += tax + (tax * tax_rate)
 
-    return round(subtotal, 2)
+    return max(total, 0)
 
 
 records = [
-    {'name': 'Apple', 'type': 'Wic Eligible food', 'price': 0.50},
-    {'name': 'T-shirt', 'type': 'Clothing', 'price': 10.00},
     {'name': 'Sneakers', 'type': 'Clothing', 'price': 50.00},
-    {'name': 'Laptop', 'type': 'everything else', 'price': 1000.00},
-    {'name': 'Milk', 'type': 'Wic Eligible food', 'price': 3.50},
+    {'name': 'Milk', 'type': 'Wic Eligible food', 'price': 5.00},
     {'name': 'Coat', 'type': 'Clothing', 'price': 75.00},
-    {'name': 'Book', 'type': 'everything else', 'price': 15.00},
+    {'name': 'Book', 'type': 'everything else', 'price': 25.00},
     {'name': 'Fur coat', 'type': 'Clothing', 'price': 200.00},
 ]
 
-state = 'PA'
-total = calculate_total(state, records)
-print(f'Total charge for state {state}: ${subtotal:.2f}')
+state = 'DE'
+total_price = calculate_total(state, records)
+print(f'Total charge for state {state}: ${total_price:.2f}')
