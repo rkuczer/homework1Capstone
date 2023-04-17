@@ -1,4 +1,4 @@
-def calculate_total(state, records):
+def calculate_total(state, selected_records):
     # Define tax rates
     tax_rates = {'NJ': 0.066, 'PA': 0.06, 'DE': 0}
 
@@ -12,7 +12,7 @@ def calculate_total(state, records):
     tax_rate = tax_rates[state]
 
     # Iterate through the items and calculate total and taxable prices
-    for item in records:
+    for item in selected_records:
         # clothing
         if item['type'] == 'Clothing':
 
@@ -52,6 +52,30 @@ def get_state():
         print("Invalid state. Please enter DE, PA, or NJ.")
 
 
+def get_selected_records(records):
+    selected_records = []
+    while True:
+        record_num = input("Enter the line number of the record you want to select, or 'done' if finished: ")
+        if record_num == 'done':
+            break
+        try:
+            record_index = int(record_num) - 1
+            if record_index < 0 or record_index >= len(records):
+                print("Invalid record number. Please try again.")
+            else:
+                selected_records.append(records[record_index])
+                print(f"Selected: {records[record_index]['name']}")
+                print(selected_records)
+        except ValueError:
+            print("Invalid input. Please enter a number or 'done'.")
+    return selected_records
+
+
+def print_records(records):
+    for i, item in enumerate(records):
+        print(f"{i + 1}. {item['name']} ({item['type']}, ${item['price']:.2f})")
+
+
 records = [
     {'name': 'Sneakers', 'type': 'Clothing', 'price': 50.00},
     {'name': 'jeans', 'type': 'Clothing', 'price': 75.00},
@@ -60,10 +84,13 @@ records = [
     {'name': 'apple', 'type': 'Wic Eligible food', 'price': 100.00}
 ]
 
+# removed but if had more time wanted allow the users which records to select
 run = True
 while run:
+    print_records(records)
+    selected_records = get_selected_records(records)
     state = get_state()
-    total_price = calculate_total(state, records)
+    total_price = calculate_total(state, selected_records)
     print(f'Total charge for state {state}: ${total_price:.2f}')
 
     user_input = input("Enter 'q' to quit or any other key to continue: ")
