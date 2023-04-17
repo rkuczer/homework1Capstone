@@ -1,7 +1,7 @@
 import unittest
 
 from main import calculate_total
-
+#User input is required for the tests then they will run. Just is due to my structuring of functions in main.py
 
 class TestCalculateTotal(unittest.TestCase):
     @classmethod
@@ -13,6 +13,7 @@ class TestCalculateTotal(unittest.TestCase):
             {'name': 'log', 'type': 'everything else', 'price': 100.00},
             {'name': 'apple', 'type': 'Wic Eligible food', 'price': 100.00}
         ]
+
     def test_NJ(self):
         state = 'NJ'
         result = calculate_total(state, self.records)
@@ -27,6 +28,12 @@ class TestCalculateTotal(unittest.TestCase):
         state = 'DE'
         result = calculate_total(state, self.records)
         self.assertEqual(result, 525.00)
+
+    def test_no_records(self):
+        state = 'NJ'
+        records = []
+        result = calculate_total(state, records)
+        self.assertEqual(result, 0)
 
 
 if __name__ == '__main__':
