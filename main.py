@@ -1,4 +1,4 @@
-def calculate_total(state, selected_records):
+def calculate_total(state, records):
     # Define tax rates
     tax_rates = {'NJ': 0.066, 'PA': 0.06, 'DE': 0}
 
@@ -9,7 +9,7 @@ def calculate_total(state, selected_records):
     tax_rate = tax_rates[state]
 
     # Iterate through the items and calculate total and taxable prices
-    for item in selected_records:
+    for item in records:
         # clothing
         if item['type'] == 'Clothing':
 
@@ -84,17 +84,21 @@ records = [
     {'name': 'apple', 'type': 'Wic Eligible food', 'price': 100.00}
 ]
 
-# main driver code
-run = True
-while run:
-    print_records(records)
-    selected_records = get_selected_records(records)
-    state = get_state()
-    total_price = calculate_total(state, selected_records)
-    print(f'Total charge for state {state}: ${total_price:.2f}')
+state = 'NJ'
+total_charge = calculate_total(state, records)
+print(f'Total charge for state {state}: ${total_charge:.2f}')
 
-    user_input = input("Enter 'q' to quit or any other key to continue: ")
-    if user_input == "q":
-        run = False
-        print("Goodbye! Hope you enjoyed my program. ")
-        exit()
+# main driver code
+# run = True
+# while run:
+#    print_records(records)
+#    selected_records = get_selected_records(records)
+#    state = get_state()
+#    total_price = calculate_total(state, selected_records)
+#    print(f'Total charge for state {state}: ${total_price:.2f}')
+
+#    user_input = input("Enter 'q' to quit or any other key to continue: ")
+#    if user_input == "q":
+#        run = False
+#        print("Goodbye! Hope you enjoyed my program. ")
+#        exit()
