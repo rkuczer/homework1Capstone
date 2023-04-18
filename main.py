@@ -2,9 +2,6 @@ def calculate_total(state, selected_records):
     # Define tax rates
     tax_rates = {'NJ': 0.066, 'PA': 0.06, 'DE': 0}
 
-    # Define tax exemptions
-    tax_exempt = {'Wic Eligible food', 'Clothing'}
-
     # Initialize variables
     total = 0.0
     taxable_total = 0.0

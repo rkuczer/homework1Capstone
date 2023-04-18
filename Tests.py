@@ -3,6 +3,7 @@ import unittest
 from main import calculate_total
 #User input is required for the tests then they will run. Just is due to my structuring of functions in main.py
 
+
 class TestCalculateTotal(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
