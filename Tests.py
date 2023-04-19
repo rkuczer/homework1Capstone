@@ -1,7 +1,9 @@
 import unittest
 
 from main import calculate_total
-#User input is required for the tests then they will run. Just is due to my structuring of functions in main.py
+
+
+# User input is required for the tests then they will run. Just is due to my structuring of functions in main.py
 
 
 class TestCalculateTotal(unittest.TestCase):
@@ -35,6 +37,24 @@ class TestCalculateTotal(unittest.TestCase):
         records = []
         result = calculate_total(state, records)
         self.assertEqual(result, 0)
+
+    def test_negative_priced_item(self):
+        state = 'PA'
+        records = [{'name': 'jeans', 'type': 'Clothing', 'price': -75.00}]
+        self.assertEqual(calculate_total(state, records), 0.0)
+
+    def test_calculate_total_edge_cases(self):
+        self.assertEqual((calculate_total('NJ', [])), 0.0)
+
+    def test_addition(self):
+        # Test with all tax-exempt items
+        records = [
+            {'name': 'apple', 'type': 'Wic Eligible food', 'price': 1.00},
+            {'name': 'banana', 'type': 'Wic Eligible food', 'price': 2.00},
+            {'name': 'shirt', 'type': 'Clothing', 'price': 10.00},
+            {'name': 'shoes', 'type': 'Clothing', 'price': 20.00},
+        ]
+        self.assertEqual((calculate_total('NJ', records)), (sum(item['price'] for item in records)))
 
 
 if __name__ == '__main__':

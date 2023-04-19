@@ -8,6 +8,10 @@ def calculate_total(state, records):
     subtotal = 0.0
     tax_rate = tax_rates[state]
 
+    if any(item['price'] < 0 for item in records):
+        print("Error: Negative prices found in record.")
+        return 0
+
     # Iterate through the items and calculate total and taxable prices
     for item in records:
         # clothing
@@ -77,7 +81,7 @@ def print_records(records):
 
 # store inventory for sale
 records = [
-    {'name': 'Sneakers', 'type': 'Clothing', 'price': 50.00},
+    {'name': 'Sneakers', 'type': 'Clothing', 'price': -50.00},
     {'name': 'jeans', 'type': 'Clothing', 'price': 75.00},
     {'name': 'Fur coat', 'type': 'Clothing', 'price': 200.00},
     {'name': 'log', 'type': 'everything else', 'price': 100.00},
