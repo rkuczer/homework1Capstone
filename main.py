@@ -64,7 +64,7 @@ def calculate_total(state, records):
 
 # store inventory for sale
 records = [
-    {'name': 'Sneakers', 'type': 'Clothing', 'price': -1.00},
+    {'name': 'Sneakers', 'type': 'Clothing', 'price': 10.00},
     {'name': 'jeans', 'type': 'Clothing', 'price': 75.00},
     {'name': 'Fur coat', 'type': 'Clothing', 'price': 200.00},
     {'name': 'log', 'type': 'everything else', 'price': 100.00},
@@ -72,7 +72,7 @@ records = [
 ]
 
 #testing code
-state = 'NJ'
+state = 'PA'
 total_charge = calculate_total(state, records)
 print(f'Total charge for state {state}: ${total_charge:.2f}')
 
