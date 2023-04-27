@@ -3,14 +3,13 @@ def calculate_total(state, records):
     tax_rates = {'NJ': 0.066, 'PA': 0.06, 'DE': 0}
 
     if not records:
-        print("Error: Records list is empty. Exiting.")
-        return 0
+        return "Error: Records list is empty. Exiting."
+        #return 0
 
     # Check if state is valid
     if state not in tax_rates:
-        print("Error: Invalid state code. Exiting.")
-        return 0
-
+        return "Error: Invalid state code. Exiting."
+        #return 0
 
     # Initialize variables
     total = 0.0
@@ -18,19 +17,18 @@ def calculate_total(state, records):
     subtotal = 0.0
     tax_rate = tax_rates[state]
 
-    #validate item types
+    # validate item types
     if any(item['price'] < 0 for item in records) or any(item['price'] == 0 for item in records):
-        print("Error: Invalid price found in item records, exiting.")
-        return 0
-
+        return "Error: Invalid price found in item records, exiting."
+        #return 0
 
     # Iterate through the items and calculate total and taxable prices
     for item in records:
-        #validate item type
+        # validate item type
         item_type = item.get('type')
         if item_type not in ['everything else', 'Wic Eligible food', 'Clothing']:
-            print(f"Error: Invalid item type '{item_type}'. Exiting.")
-            return 0
+            return f"Error: Invalid item type '{item_type}'. Exiting."
+            #return 0
 
         # clothing
         if item['type'] == 'Clothing':
@@ -59,7 +57,7 @@ def calculate_total(state, records):
 
     # calculate total
     total += (subtotal + taxable_total)
-    return max(total, 0)
+    return f"Total charge for state {state}: ${total:.2f}"
 
 
 # store inventory for sale
@@ -71,8 +69,16 @@ records = [
     {'name': 'apple', 'type': 'Wic Eligible food', 'price': 100.00}
 ]
 
-#testing code
-state = 'PA'
-total_charge = calculate_total(state, records)
-print(f'Total charge for state {state}: ${total_charge:.2f}')
-
+if __name__ == '__main__':
+    records = [
+        {'name': 'Sneakers', 'type': 'Clothing', 'price': 50.00},
+        {'name': 'jeans', 'type': 'Clothing', 'price': 75.00},
+        {'name': 'Fur coat', 'type': 'Clothing', 'price': 200.00},
+        {'name': 'log', 'type': 'everything else', 'price': 100.00},
+        {'name': 'apple', 'type': 'Wic Eligible food', 'price': 100.00}
+    ]
+    print(calculate_total('NJ', records))
+# testing code
+#state = 'PA'
+#total_charge = calculate_total(state, records)
+#print(f'Total charge for state {state}: ${total_charge:.2f}')
