@@ -60,15 +60,6 @@ def calculate_total(state, records):
     return f"Total charge for state {state}: ${total:.2f}"
 
 
-# store inventory for sale
-records = [
-    {'name': 'Sneakers', 'type': 'Clothing', 'price': 10.00},
-    {'name': 'jeans', 'type': 'Clothing', 'price': 75.00},
-    {'name': 'Fur coat', 'type': 'Clothing', 'price': 200.00},
-    {'name': 'log', 'type': 'everything else', 'price': 100.00},
-    {'name': 'apple', 'type': 'Wic Eligible food', 'price': 100.00}
-]
-
 if __name__ == '__main__':
     records = [
         {'name': 'Sneakers', 'type': 'Clothing', 'price': 50.00},
@@ -78,7 +69,6 @@ if __name__ == '__main__':
         {'name': 'apple', 'type': 'Wic Eligible food', 'price': 100.00}
     ]
     print(calculate_total('NJ', records))
-# testing code
-#state = 'PA'
-#total_charge = calculate_total(state, records)
-#print(f'Total charge for state {state}: ${total_charge:.2f}')
+    print(calculate_total('PA', records))
+    print(calculate_total('DE', records))
+
